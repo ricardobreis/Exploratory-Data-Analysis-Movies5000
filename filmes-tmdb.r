@@ -188,3 +188,43 @@ glimpse(csv)
 # Gerar novo csv
 write.csv(csv, "~/Desktop/Treinamento/csv_tmdb_pos_tidying.csv", row.names = FALSE, na = "")
 
+################################################################################################################
+################################################## Visualization #####################################################
+
+##################### Filmes Por Idiomas
+idioma = csv$original_language
+
+filmes_x_idioma <- plot_ly(
+  x = names(table(idioma)),
+  y = table(idioma),
+  name = "Idiomas",
+  type = "bar"
+) %>%
+  layout(title = 'Filmes Por Idiomas')
+
+##################### Filmes Por Produtora - TOP 10
+produtoras = csv$production_companies
+View(produtoras)
+produtoras = str_split(produtoras, ",")
+produtoras = unlist(produtoras)
+
+tail(sort(table(produtoras)),10)
+glimpse(produtoras)
+
+filmes_x_produtora <- plot_ly(
+  x = names(tail(sort(table(produtoras)),10)),
+  y = tail(sort(table(produtoras)),10),
+  name = "Produtora",
+  type = "bar"
+  ) %>%
+  layout(title = 'Filmes Por Produtora')
+
+##################### Filmes Por Ano
+csv$release_date =as.Date(csv$release_date, tryFormats = c("%Y-%m-%d", "%Y/%m/%d"))
+
+x <- sort(as.integer(unique(year(csv$release_date))))
+y <- table(year(csv$release_date))
+data <- data.frame(x, y)
+
+filmes_x_ano <- plot_ly(data, x = ~x, y = ~y, type = 'scatter', mode = 'lines') %>%
+  layout(title = 'Filmes Por Ano')
