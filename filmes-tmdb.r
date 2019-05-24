@@ -228,3 +228,16 @@ data <- data.frame(x, y)
 
 filmes_x_ano <- plot_ly(data, x = ~x, y = ~y, type = 'scatter', mode = 'lines') %>%
   layout(title = 'Filmes Por Ano')
+
+##################### Filmes Por Gênero
+genres = str_split(lista3, ",")
+str(genres)
+generos <- unlist(genres, use.names=FALSE)
+
+filmes_x_genero <- plot_ly(
+  x = names(table(generos)),
+  y = table(generos),
+  name = "Gêneros",
+  type = "bar"
+) %>%
+  layout(title = 'Filmes Por Gênero')
