@@ -241,3 +241,13 @@ filmes_x_genero <- plot_ly(
   type = "bar"
 ) %>%
   layout(title = 'Filmes Por Gênero')
+
+##################### Correlação entre Popularidade x Receita
+movies$revenue      <- as.numeric(movies$revenue)
+movies$popularity   <- as.double(movies$popularity)
+
+lm(movies$popularity ~ movies$revenue) 
+cor(movies$popularity , movies$revenue) 
+
+plot(movies$popularity ~ movies$revenue)
+abline(lm(movies$popularity ~ movies$revenue))
