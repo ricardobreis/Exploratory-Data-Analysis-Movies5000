@@ -242,12 +242,24 @@ filmes_x_genero <- plot_ly(
 ) %>%
   layout(title = 'Filmes Por Gênero')
 
-##################### Correlação entre Popularidade x Receita
+##################### Correlação e regressão linear entre Popularidade x Receita
 movies$revenue      <- as.numeric(movies$revenue)
 movies$popularity   <- as.double(movies$popularity)
 
-lm(movies$popularity ~ movies$revenue) 
+relacao <- lm(movies$popularity ~ movies$revenue) 
+summary(relacao)
 cor(movies$popularity , movies$revenue) 
 
 plot(movies$popularity ~ movies$revenue)
 abline(lm(movies$popularity ~ movies$revenue))
+
+##################### Correlação e regressão linear entre Orçamento x Receita
+movies$revenue      <- as.numeric(movies$revenue)
+movies$budget   <- as.numeric(movies$budget)
+
+relacao2 <- lm(movies$revenue ~ movies$budget) 
+summary(relacao2)
+cor(movies$revenue , movies$budget) 
+
+plot(movies$revenue ~ movies$budget)
+abline(lm(movies$revenue ~ movies$budget))
