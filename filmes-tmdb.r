@@ -260,18 +260,18 @@ filmes_x_duracao <- plot_ly(
 ) %>%
   layout(title = 'Filmes Por Duração')
 
-##################### Correlação e regressão linear entre Popularidade x Receita
+##################### Correlação e regressão linear entre Receita x Popularidade
 movies$revenue      <- as.numeric(movies$revenue)
 movies$popularity   <- as.double(movies$popularity)
 
-relacao <- lm(movies$popularity ~ movies$revenue) 
+relacao <- lm(movies$revenue ~ movies$popularity) 
 summary(relacao)
-cor(movies$popularity , movies$revenue) 
+cor(movies$revenue, movies$popularity) 
 
-plot(movies$popularity ~ movies$revenue)
-abline(lm(movies$popularity ~ movies$revenue))
+plot(movies$revenue ~ movies$popularity)
+abline(lm(movies$revenue ~ movies$popularity))
 
-##################### Correlação e regressão linear entre Orçamento x Receita
+##################### Correlação e regressão linear entre Receita x Orçamento
 movies$revenue      <- as.numeric(movies$revenue)
 movies$budget   <- as.numeric(movies$budget)
 
@@ -304,16 +304,16 @@ cor(movies$vote_average , movies$budget)
 plot(movies$vote_average ~ movies$budget)
 abline(lm(movies$vote_average ~ movies$budget))
 
-##################### Correlação e regressão linear entre Média de Votos x Revenue
+##################### Correlação e regressão linear entre Revenue x Média de Votos
 movies$vote_average      <- as.numeric(movies$vote_average)
 movies$revenue   <- as.numeric(movies$revenue)
 
-relacao4 <- lm(movies$vote_average ~ movies$revenue) 
+relacao4 <- lm(movies$revenue ~ movies$vote_average) 
 summary(relacao4)
-cor(movies$vote_average , movies$revenue) 
+cor(movies$revenue , movies$vote_average) 
 
-plot(movies$vote_average ~ movies$revenue)
-abline(lm(movies$vote_average ~ movies$revenue))
+plot(movies$revenue ~ movies$vote_average)
+abline(lm(movies$revenue ~ movies$vote_average))
 
 ##################### Correlação e regressão linear entre Runtime x Orçamento
 movies$runtime      <- as.numeric(movies$runtime)
@@ -329,6 +329,7 @@ abline(lm(movies$runtime ~ movies$budget))
 ##################### Correlação e regressão linear entre Revenue x Runtime
 movies$runtime      <- as.numeric(movies$runtime)
 movies$revenue   <- as.numeric(movies$revenue)
+sum(is.na(movies$runtime))
 
 relacao6 <- lm(movies$revenue ~ movies$runtime) 
 summary(relacao6)
@@ -347,3 +348,7 @@ cor(movies$revenue , movies$vote_count)
 
 plot(movies$vote_count ~ movies$revenue)
 abline(lm(movies$vote_count ~ movies$revenue))
+
+##################### Regressão linear multipla entre Revenue x Contagem de Votos + Orçamento + Popularidade
+relacao8 <- lm(movies$revenue ~ movies$vote_count + movies$budget + movies$popularity) 
+summary(relacao8)
